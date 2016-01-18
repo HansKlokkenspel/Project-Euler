@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <stdexcept>
 
 /****************************
  * PROBLEM 1                *
@@ -56,16 +58,54 @@ bool isPrime(int number) {
     return true;
 }
 
-int problem3(){
-    int factor = 0;
+int problem3() {
+    int bestFactor = 0;
+    unsigned long long int magicNumber = 600851475143;
 
 
+    for (int i = 0; i * i <= magicNumber; ++i) {
+        if (isPrime(i) && (magicNumber % i) == 0) {
+            bestFactor = i;
+        }
+    }
 
-    return factor;
+    return bestFactor;
 }
 
+/****************************
+ * PROBLEM 4                *
+ ****************************/
+
+int problem4() {
+    std::stringstream ss;
+    std::string s;
+
+    int max_palindrome = 0;
+    int product = 0;
+
+    for (int i = 100; i <= 999; ++i) {
+        for (int j = 100; j <= 999; ++j) {
+            product = (i * j);
+            ss << product;
+            s = ss.str();
+            ss.str(std::string());
+            if (std::equal(s.begin(), s.begin() + s.size() / 2, s.rbegin())) {
+                if (product > max_palindrome) {
+                    max_palindrome = product;
+                }
+            }
+        }
+    }
+
+    return max_palindrome;
+}
+
+/****************************
+ * PROBLEM 5                *
+ ****************************/
+
 int main() {
-    int p2 = problem2();
-    std::cout << p2;
+    int p3 = problem4();
+    std::cout << p3;
     return 0;
 }
